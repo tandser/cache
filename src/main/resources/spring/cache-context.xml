@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="cacheSerializator" class="ru.tandser.cache.services.CacheSerializatorImpl">
+        <constructor-arg value="${cache.rootStoragePath}"/>
+    </bean>
+
+    <bean id="l1Cache" class="ru.tandser.cache.L1Cache"/>
+
+    <bean id="l2Cache" class="ru.tandser.cache.L2Cache">
+        <property name="cacheSerializator" ref="cacheSerializator"/>
+    </bean>
+
+    <bean id="cacheEraser" class="ru.tandser.cache.services.CacheEraserImpl"/>
+
+    <bean id="twoLevelCache" class="ru.tandser.cache.TwoLevelCache">
+        <property name="cacheEraser"               ref="cacheEraser"/>
+        <property name="l1Cache"                   ref="l1Cache"/>
+        <property name="l2Cache"                   ref="l2Cache"/>
+        <property name="l1CacheCapacity"           value="${cache.l1CacheCapacity}"/>
+        <property name="l2CacheCapacity"           value="${cache.l2CacheCapacity}"/>
+        <property name="l1CacheLoadFactor"         value="${cache.l1CacheLoadFactor}"/>
+        <property name="l2CacheLoadFactor"         value="${cache.l2CacheLoadFactor}"/>
+        <property name="numOfExtractsForShift"     value="${cache.numOfExtractsForShift}"/>
+        <property name="timeLimit"                 value="${cache.timeLimit}"/>
+        <property name="minThresholdCallsForShift" value="${cache.minThresholdCallsForShift}"/>
+    </bean>
+
+    <beans profile="prod">
+        <context:property-placeholder location="classpath:properties/cache.properties"/>
+    </beans>
+
+    <beans profile="test">
+        <context:property-placeholder location="classpath:properties/test-cache.properties"/>
+    </beans>
+
+</beans>

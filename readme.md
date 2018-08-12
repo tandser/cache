@@ -34,3 +34,6 @@ cache.rootStoragePath           = cache
 
 Файлы L2-кэша записываются в директорию, указанную в параметре `cache.rootStoragePath`. Вы можете указать наиболее подходящий для вас путь, однако не забывайте о правах доступа.
 
+## Сборка
+
+Для сборки jar необходимо выполнить команду `mvn clean install -DskipTests=true -Dspring.profiles.active=prod`.

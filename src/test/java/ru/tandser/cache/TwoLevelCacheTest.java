@@ -25,7 +25,7 @@ public class TwoLevelCacheTest extends AbstractTest {
 
     @BeforeClass
     public static void beforeClass() {
-        gettingCache = TestUtils.gettingCache();
+        gettingCache      = TestUtils.gettingCache();
         keysL1CacheShift1 = TestUtils.keysL1CacheShift1();
         keysL2CacheShift1 = TestUtils.keysL2CacheShift1();
         keysL1CacheShift2 = TestUtils.keysL1CacheShift2();

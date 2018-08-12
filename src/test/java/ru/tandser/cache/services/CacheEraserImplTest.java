@@ -1,5 +1,6 @@
 package ru.tandser.cache.services;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class CacheEraserImplTest extends AbstractTest {
         }
     }
 
+    @After
+    public void after() {
+        l1Cache.clear();
+        l2Cache.clear();
+    }
+
     @Test
     public void erase() {
         SortedSet<Map.Entry<Integer, LocalDateTime>> setWithDateTimeL1Cache = CacheUtils.entriesSortedByValues(CacheUtils.getMapWithDateTimeCache(l1Cache));
@@ -67,7 +74,5 @@ public class CacheEraserImplTest extends AbstractTest {
                 }
             }
         }
-
-
     }
 }

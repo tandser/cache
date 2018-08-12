@@ -97,13 +97,13 @@ public class TwoLevelCache implements MultilevelCache<Integer, Object> {
 
         if (l1Cache.contains(key)) {
             result = get(l1Cache, key);
-            logger.debug("put: result from L1-cache = {}", result);
+            logger.debug("get: result from L1-cache = {}", result);
             return result;
         }
 
         if (l2Cache.contains(key)) {
             result = get(l2Cache, key);
-            logger.debug("put: result from L2-cache = {}", result);
+            logger.debug("get: result from L2-cache = {}", result);
             return result;
         }
 
@@ -143,6 +143,7 @@ public class TwoLevelCache implements MultilevelCache<Integer, Object> {
 
     @Override
     public void clear() {
+        cacheGetCounter.set(0);
         l1Cache.clear();
         l2Cache.clear();
     }
